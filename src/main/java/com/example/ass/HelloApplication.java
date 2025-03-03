@@ -27,7 +27,7 @@ public class HelloApplication extends Application {
     private int currentIndex = 0;
     private Stage stage;
     private Scene galleryScene;
-
+    //Method that loads the images
     private void loadImages() {
         File folder = new File("src/images"); // Change this to your image directory
         if (folder.exists() && folder.isDirectory()) {
@@ -40,20 +40,14 @@ public class HelloApplication extends Application {
 
         if (imagePaths.isEmpty()) {
             System.out.println("No images found in the directory!");
-            return;
         }
     }
-
 
     @Override
     public void start(Stage primaryStage) {
         this.stage = primaryStage;
-
         // Load images from a directory (Modify path as needed)
-
-
         loadImages();
-
         // Create the gallery scene once and store it
         galleryScene = createGalleryScene();
 
@@ -75,6 +69,7 @@ public class HelloApplication extends Application {
         gridPane.getStyleClass().add("gallery-grid");
         gridPane.setHgap(10);
         gridPane.setVgap(10);
+        gridPane.setAlignment(Pos.CENTER);
 
         int columns = 5;
         int row = 0, col = 0;
@@ -89,7 +84,6 @@ public class HelloApplication extends Application {
                 row++;
             }
         }
-
         // Wrap gridPane inside a ScrollPane for scrolling
         ScrollPane scrollPane = new ScrollPane(gridPane);
         scrollPane.setFitToWidth(true);
@@ -114,18 +108,15 @@ public class HelloApplication extends Application {
         StackPane thumbnailPane = new StackPane(imageView); // Wrap ImageView in StackPane
         thumbnailPane.getStyleClass().add("thumbnail-pane");
         thumbnailPane.setCursor(Cursor.HAND);
-
         // Add hover effect
         thumbnailPane.setOnMouseEntered(e -> {
             thumbnailPane.setScaleX(1.1);
             thumbnailPane.setScaleY(1.1);
         });
-
         thumbnailPane.setOnMouseExited(e -> {
             thumbnailPane.setScaleX(1.0);
             thumbnailPane.setScaleY(1.0);
         });
-
         // Click event to open full image
         thumbnailPane.setOnMouseClicked(e -> openFullSizeImage(index));
 
@@ -175,14 +166,12 @@ public class HelloApplication extends Application {
             imageView.setImage(new Image(imagePaths.get(currentIndex)));
         }
     }
-
     private void showNextImage(ImageView imageView) {
         if (currentIndex < imagePaths.size() - 1) {
             currentIndex++;
             imageView.setImage(new Image(imagePaths.get(currentIndex)));
         }
     }
-
     public static void main(String[] args) {
         launch();
     }
